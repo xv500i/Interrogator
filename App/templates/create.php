@@ -1,44 +1,10 @@
-<!doctype html>
-
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-
-	<title>The Interrogator</title>
-	<meta name="description" content="The HTML5 Herald">
-	<meta name="author" content="Alex Soms Batalla">
-
-	<link rel="stylesheet" href="css/style.css">
-
-	<!--[if lt IE 9]>
-	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-</head>
-<body>
-	<header>
-		<h1>The Interrogator</h1>
-	</header>
-	<nav>
-		<a href="#">Create a question</a> |
-		<a href="#">Last added questions</a> |
-		<a href="#">Available questions</a> |
-		<a href="#">Finished questions</a> |
-		<a href="#">Most popular questions</a>
-	</nav>
-	<div>
-		<form action="" method="GET">
-			<label for="search-input">Search for a question</label>
-			<input type="text" name="search-input" title="Input some question's keyword" placeholder="Some keyword"/>
-			<input type="submit" value="Search" />
-		</form>
-	</div>
-	<main>
+<?php ob_start() ?>
 		<section>
 			<header>
 				<h2>Create a question</h2>
 			</header>
 			<div>
-				<form action="" method="POST">
+				<form action="debug_form.php" method="POST">
 					<fieldset>
 						<legend>Question</legend>
 						<label for="question[desc]" >Description</label>
@@ -82,7 +48,6 @@
 				</form>
 			</div>
 		</section>
-		<!--<script src="js/scripts.js"></script>-->
-	</main>
-</body>
-</html>
+<?php $main = ob_get_clean() ?>
+ 
+<?php include 'base.php' ?>

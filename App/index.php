@@ -1,14 +1,18 @@
 <?php
  
+// Front controller
+ 
 // carga e inicia algunas librerías globales
-require_once 'model.php';
+// require_once 'model.php';
 require_once 'controllers.php';
  
-// encamina la petición internamente
+// Dispatching
 $uri = $_SERVER['REQUEST_URI'];
-if ($uri == '/index.php') {
-    list_action();
-} elseif ($uri == '/index.php/show' && isset($_GET['id'])) {
+if ($uri == '/') {
+	home_action();
+} elseif ($uri == '/index.php/create') {
+    create_question_action();
+} elseif ($uri == '/index.php/create' && false) {
     show_action($_GET['id']);
 } else {
     header('Status: 404 Not Found');
