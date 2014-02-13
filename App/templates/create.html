@@ -1,0 +1,88 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>The Interrogator</title>
+	<meta name="description" content="The HTML5 Herald">
+	<meta name="author" content="Alex Soms Batalla">
+
+	<link rel="stylesheet" href="css/style.css">
+
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<header>
+		<h1>The Interrogator</h1>
+	</header>
+	<nav>
+		<a href="#">Create a question</a> |
+		<a href="#">Last added questions</a> |
+		<a href="#">Available questions</a> |
+		<a href="#">Finished questions</a> |
+		<a href="#">Most popular questions</a>
+	</nav>
+	<div>
+		<form action="" method="GET">
+			<label for="search-input">Search for a question</label>
+			<input type="text" name="search-input" title="Input some question's keyword" placeholder="Some keyword"/>
+			<input type="submit" value="Search" />
+		</form>
+	</div>
+	<main>
+		<section>
+			<header>
+				<h2>Create a question</h2>
+			</header>
+			<div>
+				<form action="" method="POST">
+					<fieldset>
+						<legend>Question</legend>
+						<label for="question[desc]" >Description</label>
+						<textarea required="required" autofocus="autofocus" rows="4" cols="50" name="question_desc" placeholder="The question itself"></textarea>
+						<label for="question[initial_date]">Initial date</label>
+						<input required="required" name="question[initial_date]" type="date" placeholder="dd/mm/yyyy hh:mm" title="The question cannot be answered before this date"/>
+						<label for="question[end_date]">End date</label>
+						<input required="required" name="question[end_date]" type="date" placeholder="dd/mm/yyyy hh:mm" title="The question cannot be answered after this date"/>
+					</fieldset>
+					<fieldset>
+						<legend>Answers</legend>
+						<input type="hidden" name="num_answers" id="num_answers" value="3"/>
+						
+						<fieldset>
+							<legend>Answer 1</legend>
+							<label for="answers[0][name]">Name</label>
+							<input value="a" required="required" name="answers[0][name]" size="3" maxlength="3" type="date" placeholder="a" title="Your custom enumeration"/>
+							<label for="answers[0][desc]">Description</label>
+							<textarea rows="4" cols="50" name="answers[0][desc]" placeholder="The answer's description"></textarea>
+						</fieldset>
+						
+						<fieldset>
+							<legend>Answer 2</legend>
+							<label for="answers[1][name]">Name</label>
+							<input value="b" required="required" name="answers[1][name]" size="3" maxlength="3" type="date" placeholder="b" title="Your custom enumeration"/>
+							<label for="answers[1][desc]">Description</label>
+							<textarea rows="4" cols="50" name="answers[1][desc]" placeholder="The answer's description"></textarea>
+						</fieldset>
+						
+						<fieldset>
+							<legend>Answer 3</legend>
+							<label for="answers[2][name]">Name</label>
+							<input value="c" required="required" name="answers[2][name]" size="3" maxlength="3" type="date" placeholder="c" title="Your custom enumeration"/>
+							<label for="answers[2][desc]">Description</label>
+							<textarea rows="4" cols="50" name="answers[2][desc]" placeholder="The answer's description"></textarea>
+							<button>Delete this answer</button>
+						</fieldset>
+						<button>Add another answer</button>
+					</fieldset>
+					<input type="submit" value="Create question" />
+				</form>
+			</div>
+		</section>
+		<!--<script src="js/scripts.js"></script>-->
+	</main>
+</body>
+</html>

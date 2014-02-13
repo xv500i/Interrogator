@@ -18,11 +18,6 @@
 <command> 	Defines a command button that a user can invoke
 <meter> 	Defines a scalar measurement within a known range (a gauge)
 <progress> 	Defines the progress of a task
-<ruby> 	Defines a ruby annotation (for East Asian typography)
-<rt> 	Defines an explanation/pronunciation of characters (for East Asian typography)
-<rp> 	Defines what to show in browsers that do not support ruby annotations
-
-
 
 <section>
   <h1>WWF</h1>
