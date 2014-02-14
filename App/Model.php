@@ -1,5 +1,22 @@
 <?php
- 
+
+abstract class Model {
+	
+	public function __construct() {
+		$this->initialize();
+	}
+
+	public abstract function initialize();
+	public abstract function get($id);
+	public abstract function update($entity);
+	public abstract function delete($id);
+	public abstract function getAll();
+}
+
+?>
+
+<?php
+/*
 function open_database_connection() {
     $link = mysql_connect('localhost', 'myuser', 'mypassword');
     mysql_select_db('blog_db', $link);
@@ -51,5 +68,5 @@ function get_post_by_id($id) {
  
     return $row;
 }
-
+*/
 ?>
