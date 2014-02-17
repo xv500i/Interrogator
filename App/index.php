@@ -1,9 +1,9 @@
 <?php
 
-	// Include ONLY controller
-	require_once ($_SERVER['DOCUMENT_ROOT'] . '/Controller.php');
-	require_once ($_SERVER['DOCUMENT_ROOT'] . '/Model.php');
-	require_once ($_SERVER['DOCUMENT_ROOT'] . '/View.php');
+	// Include ONLY MVC abstract classes
+	require_once ($_SERVER['DOCUMENT_ROOT'] . '/controller/Controller.php');
+	require_once ($_SERVER['DOCUMENT_ROOT'] . '/model/Model.php');
+	require_once ($_SERVER['DOCUMENT_ROOT'] . '/view/View.php');
 	
 	// Static routing
 	$uri = $_SERVER['REQUEST_URI'];
@@ -17,6 +17,16 @@
 		'/index.php/create' => array(
 			'model' => 'QuestionModel',
 			'view' => 'CreateQuestionView',
+			'controller' => 'QuestionController'
+		),
+		'/index.php/debug_model' => array(
+			'model' => 'QuestionModel',
+			'view' => 'DebugModelView',
+			'controller' => 'QuestionController'
+		),
+		'/index.php/debug_form' => array(
+			'model' => 'QuestionModel',
+			'view' => 'DebugFormView',
 			'controller' => 'QuestionController'
 		)
 	);
@@ -35,10 +45,11 @@
     if (isset($model)) {
 	
 		// Static loading
-		require_once ($_SERVER['DOCUMENT_ROOT'] . '/' . $model . '.php');
-		require_once ($_SERVER['DOCUMENT_ROOT'] . '/' . $controller . '.php');
-		require_once ($_SERVER['DOCUMENT_ROOT'] . '/' . $view . '.php');
+		require_once ($_SERVER['DOCUMENT_ROOT'] . '/model/' . $model . '.php');
+		require_once ($_SERVER['DOCUMENT_ROOT'] . '/controller/' . $controller . '.php');
+		require_once ($_SERVER['DOCUMENT_ROOT'] . '/view/' . $view . '.php');
         
+		// This instantiates the MVC depending on specifications from routing table
 		$m = new $model();
         $c = new $controller($m);
         $v = new $view($m, $c);
@@ -48,9 +59,11 @@
 			$c->{$_GET['action']}();
 		}
 		
+		// View is the responsible of output
         $v->output();
 		
     } else {
+	
 		// Fixme: use not found view
 		header('Status: 404 Not Found');
 		echo "<html><body><h1>Page Not Found: $uri</h1></body></html>";

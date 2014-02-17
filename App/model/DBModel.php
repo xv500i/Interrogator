@@ -1,7 +1,7 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/Model.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/DBHandler.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/model/Model.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/utils/DBHandler.php');
 
 abstract class DBModel extends Model {
 

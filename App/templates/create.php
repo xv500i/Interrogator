@@ -4,7 +4,7 @@
 				<h2>Create a question</h2>
 			</header>
 			<div>
-				<form action="debug_form.php" method="POST">
+				<form action="/index.php/debug_form" method="POST">
 					<fieldset>
 						<legend>Question</legend>
 						<label for="question[desc]" >Description</label>
@@ -50,4 +50,4 @@
 		</section>
 <?php $main = ob_get_clean() ?>
  
-<?php include 'base.php' ?>
+<?php require ($_SERVER['DOCUMENT_ROOT'] . '/templates/base.php'); ?>

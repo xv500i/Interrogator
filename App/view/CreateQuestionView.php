@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/View.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/view/View.php');
 
 class CreateQuestionView extends View {
  

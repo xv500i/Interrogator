@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 
 	<title>The Interrogator</title>
-	<meta name="description" content="The HTML5 Herald">
+	<meta name="description" content="The Interrogator">
 	<meta name="author" content="Alex Soms Batalla">
 
 	<link rel="stylesheet" href="css/style.css">
@@ -47,7 +47,7 @@
 			<a href="/">
 				<img style="border:0;width:88px;height:31px"
 					src="http://jigsaw.w3.org/css-validator/images/vcss"
-					alt="¡CSS Válido!" />
+					alt="CSS VÃ¡lido!" />
 			</a>
 		</p>
 	</footer>

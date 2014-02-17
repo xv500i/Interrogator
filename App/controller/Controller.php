@@ -1,6 +1,5 @@
 <?php
-class Controller
-{
+class Controller {
     protected $model;
  
     public function __construct($model){
