@@ -1,10 +1,12 @@
-
 nav, a, a:visited {
     color: #FFFFFF;
 }
 div#search-form {
     padding: 5px;
     text-align: right;
+}
+textarea{
+	resize: none;
 }
 article {
     border: 1px solid #000000;

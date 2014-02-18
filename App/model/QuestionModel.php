@@ -44,22 +44,42 @@ class QuestionModel extends DBModel {
 		);
 		
 		self::$mockQuestions = array(
-			new QuestionDAO(123, 'Test description0', '12/12/2013', '13/12/2013', '14/12/2013', null),
-			new QuestionDAO(124, 'Test description1', '12/12/2014', '13/12/2014', '14/12/2014', null),
-			new QuestionDAO(125, 'Test description2', '12/12/2015', '13/12/2015', '14/12/2015', null),
-			new QuestionDAO(126, 'Test description3', '12/12/2016', '13/12/2016', '14/12/2016', null),
-			new QuestionDAO(127, 'Test description4', '12/12/2017', '13/12/2017', '14/12/2017', null)
+			new QuestionDAO(123, 'Test description0', '12/12/2013', '13/12/2013', '14/12/2013', array()),
+			new QuestionDAO(124, 'Test description1', '12/12/2014', '13/12/2014', '14/12/2014', array()),
+			new QuestionDAO(125, 'Test description2', '12/12/2015', '13/12/2015', '14/12/2015', array()),
+			new QuestionDAO(126, 'Test description3', '12/12/2016', '13/12/2016', '14/12/2016', array()),
+			new QuestionDAO(127, 'Test description4', '12/12/2017', '13/12/2017', '14/12/2017', array())
 		);
 		
 		for ($i = 0; $i < count(self::$mockQuestions); $i++) {
 			$question = self::$mockQuestions[$i];
-			$question->answers = array();
 			foreach ($answers[$i] as $answer) {
 				// Bidirectional reference
 				$answer->question = $question;
 				$question->answers[] = $answer;
 			}
 		}
+	}
+	
+	public function getDefaultQuestion() {
+		$answers = array(
+			new AnswerDAO('A', 'answer description for A', null, null),
+			new AnswerDAO('B', 'answer description for B', null, null),
+			new AnswerDAO('C', 'answer description for C', null, null)
+		);
+		
+		$question = new QuestionDAO(null, 'Description for the question', null, '19/05/2014', '20/05/2014', array());
+		
+		foreach ($answers as $answer) {
+			$answer->question = $question;
+			$question->answers[] = $answer;
+		}
+		
+		return $question;
+	}
+	
+	public function isQuestionValid($question) {
+		return false;
 	}
 
 	public function get($id) {

@@ -6,8 +6,10 @@
 	require_once ($_SERVER['DOCUMENT_ROOT'] . '/view/View.php');
 	
 	// Static routing
-	$uri = $_SERVER['REQUEST_URI'];
-	
+	$full_uri = $_SERVER['REQUEST_URI'];
+	$url_parts = parse_url($full_uri);
+	$uri = $url_parts['path'];
+	// echo $uri . '<br/>';
 	$routing_table = array(
 		'/' => array(
 			'model' => 'QuestionModel',
@@ -27,6 +29,11 @@
 		'/index.php/debug_form' => array(
 			'model' => 'QuestionModel',
 			'view' => 'DebugFormView',
+			'controller' => 'QuestionController'
+		),
+		'/index.php/submitQuestion' => array(
+			'model' => 'QuestionModel',
+			'view' => 'QuestionSubmitView',
 			'controller' => 'QuestionController'
 		)
 	);
@@ -56,7 +63,7 @@
 		
 		// If controller action is defined, execute it
 		if (isset($_GET['action']) && !empty($_GET['action'])) {
-			$c->{$_GET['action']}();
+			$c->{$_GET['action'].'Action'}();
 		}
 		
 		// View is the responsible of output
