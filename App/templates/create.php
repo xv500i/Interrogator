@@ -19,15 +19,7 @@
 						<input type="hidden" name="num_answers" id="num_answers" value="<?php echo (sizeof($question->answers)); ?>"/>
 						<?php foreach ($question->answers as $key => $answer): ?>
 						<fieldset id="answer-<?php echo $key; ?>">
-							<legend>Answer <?php echo ($key+1); ?></legend>
-							<label for="answers[<?php echo $key; ?>][name]">Name</label>
-							<input value="<?php echo $answer->name; ?>" required name="answers[<?php echo $key; ?>][name]" size="3" maxlength="3" type="text" placeholder="a" title="Your custom enumeration"/>
-							<label for="answers[<?php echo $key; ?>][desc]">Description</label>
-							<textarea required rows="4" cols="50" name="answers[<?php echo $key; ?>][desc]" placeholder="The answer's description"><?php echo $answer->description; ?></textarea>
-							<?php if ($key >= 2): ?>
-							<button type="button" onclick="javascript:removeQ(<?php echo $key ?>);" >Delete this answer</button>
-							<?php endif; ?>
-						</fieldset>
+							<legend>Answer <?php echo ($key+1); ?></legend><label for="answers[<?php echo $key; ?>][name]">Name</label><input value="<?php echo $answer->name; ?>" required name="answers[<?php echo $key; ?>][name]" size="3" maxlength="3" type="text" placeholder="a" title="Your custom enumeration"/><label for="answers[<?php echo $key; ?>][desc]">Description</label><textarea required rows="4" cols="50" name="answers[<?php echo $key; ?>][desc]" placeholder="The answer's description"><?php echo $answer->description; ?></textarea><?php if ($key >= 2): ?><button type="button" <?php if($key != (sizeOf($question->answers) -1)) {echo "disabled";} ?> onclick="javascript:removeQ(<?php echo $key ?>);" >Delete this answer</button><?php endif; ?></fieldset>
 						<?php endforeach; ?>
 						<button type="button" onclick="javascript:addQ();">Add another answer</button>
 					</fieldset>

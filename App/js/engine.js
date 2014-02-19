@@ -6,11 +6,11 @@ function addQ() {
 		var field = document.createElement("fieldset");
 		field.id = "answer-"+n;
 		var legend = document.createElement("legend");
-		legend.innerHTML="Answer " + (n+1);
+		legend.innerHTML= "Answer " + (n+1);
 		field.appendChild(legend);
 		
 		var labelName = document.createElement("label");
-		labelName.for= "answers-[" + n + "][name]";
+		labelName.htmlFor= "answers[" + n + "][name]";
 		labelName.appendChild(document.createTextNode("Name"));
 		field.appendChild(labelName);
 		
@@ -26,7 +26,7 @@ function addQ() {
 		field.appendChild(inputName);
 		
 		var labelDesc = document.createElement("label");
-		labelDesc.htmlFor= "answers-[" + n + "][desc]";
+		labelDesc.htmlFor= "answers[" + n + "][desc]";
 		labelDesc.appendChild(document.createTextNode("Description"));
 		field.appendChild(labelDesc);
 		
@@ -47,6 +47,7 @@ function addQ() {
 		target.insertBefore(field, target.lastChild.previousSibling);
 		setNumAnswers(n+1);
 	}
+	updateButtons();
 	return false;
 }
 
@@ -58,11 +59,19 @@ function removeQ(i) {
 		e.parentNode.removeChild(e);
 		setNumAnswers(n-1);
 	}
+	updateButtons();
 	return false;
 }
 
 function getNumAnswers() {
 	return parseInt(document.getElementById('num_answers').value);
+}
+
+function updateButtons() {
+	var buts = document.getElementsByTagName('button');
+	for (var i = 0; i < buts.length; i++) {
+		buts[i].disabled = (i < (buts.length - 2)); 
+	}
 }
 
 function setNumAnswers(n) {
