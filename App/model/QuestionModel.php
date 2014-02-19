@@ -78,11 +78,54 @@ class QuestionModel extends DBModel {
 		return $question;
 	}
 	
-	public function isQuestionValid($question) {
-		return false;
+	public function validate($question) {
+		$ret = array();
+		
+		// Check Question
+		if ($question->description == '') {
+			$ret['question.description']['void'] = 'Question\'s description is void';
+		}
+		if ($question->initial_date == '') {
+			$ret['question.initial_date']['void'] = 'Initial date is void';
+		}
+		// Todo valid date
+		if ($question->ending_date == '') {
+			$ret['question.ending_date']['void'] = 'Ending date is void';
+		}
+		// TODO valid date
+		if (sizeof($question->answers) < 2 || sizeof($question->answers) > 10) {
+			$ret['question.answers']['limits'] = 'One question must have between 2 and 10 answers, both included';
+		}
+		
+		// Check answers
+		foreach ($question->answers as $key => $value) {
+			if ($value->description == '') {
+				$ret["question.answers$key.description"]['void'] = "Answer $key description is void";
+			}
+			if ($value->name == '') {
+				$ret["question.answers$key.name"]['void'] = "Answer $key name is void";
+			}
+		}
+		
+		return $ret;
 	}
 
 	public function get($id) {
+		/*
+			string date(string $format, int $timestamp);
+			format = 'j-n-Y H-i e'
+			
+			int time(): current time from epoch
+			
+			int mktime( hour, minute, second, month, day, year, is_dst);
+			
+			int strtotime(string);
+			
+			$ymd = DateTime::createFromFormat('m-d-Y', $string)->format('Y-m-d');
+			
+			strtotime('2013-02-20 02:25:21') should be fine
+		
+		*/
 		return QuestionModel::$mockQuestions[$id];
 	}
 	

@@ -62,7 +62,8 @@ class QuestionController extends Controller {
 		$this->currentQuestion = $question;
 		var_dump($question);
 		
-		if ($this->model->isQuestionValid($question)) {
+		$errors = $this->model->validate($question);
+		if (sizeof($errors) == 0) {
 			// TODO: insert
 			$this->createSucceed = true;
 		} else {
