@@ -52,7 +52,7 @@ class QuestionController extends Controller {
 			die();
 		}
 		
-		$question = new QuestionDAO(null, $d, null, $id, $ed, array());
+		$question = new QuestionDAO(null, $d, null, $id, $ed, array(), null);
 		
 		foreach ($answers as $answer) {
 			$question->answers[] = new AnswerDAO($answer['name'], $answer['desc'], null, $question);
@@ -64,13 +64,18 @@ class QuestionController extends Controller {
 		
 		$errors = $this->model->validate($question);
 		if (sizeof($errors) == 0) {
-			// TODO: insert
-			$this->createSucceed = true;
+			try {
+				$this->model->create($question);
+				$this->createSucceed = true;
+			} catch (Exception $e) {
+				
+			}
 		} else {
 			$this->createSucceed = false;
 		}
-		$valid = ($this->createSucceed ? 'true' : 'false');
-		echo "The model is valid = $valid";
+		//$valid = ($this->createSucceed ? 'true' : 'false');
+		//echo "The model is valid = $valid";
+		var_dump($errors);
 	}
 	
 	public function questionCreated() {

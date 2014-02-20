@@ -22,6 +22,7 @@ class DBHandler {
 	public function select($query) {
 		$ret = array();
 		$res = $this->mysqli->query($query);
+		//var_dump($this->mysqli);
 		if ($this->mysqli->error) {
 			throw new Exception('Query error:' . $this->mysqli->error);
 		}
@@ -30,6 +31,15 @@ class DBHandler {
 			$ret[] = $row;
 		}
 		return $ret;
+	}
+	
+	public function insert($query) {
+		$res = $this->mysqli->query($query);
+		//var_dump($this->mysqli);
+		if ($this->mysqli->error) {
+			throw new Exception('Query error:' . $this->mysqli->error);
+		}
+		return $this->mysqli->insert_id;
 	}
 }
 

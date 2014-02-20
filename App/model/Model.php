@@ -6,6 +6,7 @@ abstract class Model {
 	public abstract function update($entity);
 	public abstract function delete($id);
 	public abstract function getAll();
+	public abstract function create($entity);
 }
 
 ?>

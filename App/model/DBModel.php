@@ -15,6 +15,7 @@ class DBModel extends Model {
 	public function update($entity){}
 	public function delete($id){}
 	public function getAll(){}
+	public function create($entity){}
 }
 
 ?>

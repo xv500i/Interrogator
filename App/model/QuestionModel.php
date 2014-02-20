@@ -7,6 +7,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/model/AnswerDAO.php');
 class QuestionModel extends DBModel {
 
 	private static $select_all_questions = 'select q.id as id, q.description as description, q.created as created, q.modified as modified, q.begin_date as initial_date, q.end_date as ending_date, a.name as answer_name, a.votes as answer_votes, a.description as answer_description from questions q, answers a where q.id = a.question_id;';
+	private static $insert_question = "insert into questions (description, begin_date, end_date) values (?,?,?)";
+	private static $insert_answer = "insert into answers (name, description, question_id) values ('?','?',?)";
 	
 	public function __construct() {
 		parent::__construct();
@@ -140,6 +142,30 @@ class QuestionModel extends DBModel {
 		}
 		//var_dump($question);
 		return $question;
+	}
+	
+	public function create($entity) {
+		$question = $entity;
+		
+		// insert question
+		//var_dump($entity->initial_date);
+		//$test = DateTime::createFromFormat('d/m/Y', $entity->initial_date)->format('Y-m-d H:i:s');
+		//var_dump($test);
+		$initial_string = DateTime::createFromFormat('d/m/Y', $entity->initial_date)->format('Y-m-d H:i:s');
+		$ending_string = DateTime::createFromFormat('d/m/Y', $entity->ending_date)->format('Y-m-d H:i:s');
+		// var_dump($initial_string);
+		// var_dump($ending_string);
+		$query = "insert into questions (description, begin_date, end_date) values ('$entity->description','$initial_string','$ending_string')";
+		//echo ($query);
+		$id = $this->db_handler->insert($query);
+		
+		//echo ("insert question<br/>");
+		foreach($question->answers as $answer) {
+			$query = "insert into answers (name, description, question_id) values ('$answer->name','$answer->description',$id)";
+			//echo ($query);
+			$this->db_handler->insert($query);
+			//echo ("insert answer<br/>");
+		}
 	}
 }
 
