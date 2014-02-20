@@ -2,11 +2,6 @@
 
 abstract class Model {
 	
-	public function __construct() {
-		$this->initialize();
-	}
-
-	public abstract function initialize();
 	public abstract function get($id);
 	public abstract function update($entity);
 	public abstract function delete($id);

@@ -7,10 +7,10 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/model/AnswerDAO.php');
 class QuestionModel extends DBModel {
 
 	private static $mockQuestions;
+	private static $select_all_questions = 'select * from questions;';
 	
-	public function initialize() {
-		parent::initialize();
-		
+	public function __construct() {
+		parent::__construct();
 		//Mock answers
 		$answers = array(
 			array(
@@ -134,6 +134,9 @@ class QuestionModel extends DBModel {
 	public function delete($id) {}
 	
 	public function getAll() {
+		$res = $this->db_handler->select(self::$select_all_questions);
+		var_dump($this);
+		var_dump($res);
 		$objs = array();
 		$objs[] = $this->get(0);
 		$objs[] = $this->get(1);
