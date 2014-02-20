@@ -14,8 +14,10 @@
 				
 					<p>
 						<span><?php echo $answer->name ?></span>: <span><?php echo $answer->description ?></span>
+						<?php if ($result > 0): ?>
 						<?php $pct = number_format((floatval($answer->votes)/$result), 2, '.', ''); ?>
 						<meter value="<?php echo $pct ?>" min="0" max="1" title="<?php echo ($pct*100) ?>%"></meter>
+						<?php endif; ?>
 					</p>
 				<?php endforeach; ?>
 				</div>

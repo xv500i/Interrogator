@@ -6,59 +6,10 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/model/AnswerDAO.php');
 
 class QuestionModel extends DBModel {
 
-	private static $mockQuestions;
-	private static $select_all_questions = 'select * from questions;';
+	private static $select_all_questions = 'select q.id as id, q.description as description, q.created as created, q.modified as modified, q.begin_date as initial_date, q.end_date as ending_date, a.name as answer_name, a.votes as answer_votes, a.description as answer_description from questions q, answers a where q.id = a.question_id;';
 	
 	public function __construct() {
 		parent::__construct();
-		//Mock answers
-		$answers = array(
-			array(
-				new AnswerDAO('A', 'answer description for A', 3515, null),
-				new AnswerDAO('B', 'answer description for B', 2121, null),
-				new AnswerDAO('C', 'answer description for C', 20351, null),
-				new AnswerDAO('D', 'answer description for D', 2000, null)
-			),
-			array(
-				new AnswerDAO('1', 'answer description for 1', 202, null),
-				new AnswerDAO('2', 'answer description for 2', 909, null),
-				new AnswerDAO('3', 'answer description for 3', 1002, null),
-				new AnswerDAO('4', 'answer description for 4', 678, null)
-			),
-			array(
-				new AnswerDAO('Y', 'Yes', 223, null),
-				new AnswerDAO('N', 'No', 1385, null)
-			),
-			array(
-				new AnswerDAO('A', 'answer description for A', 1, null),
-				new AnswerDAO('B', 'answer description for B', 2, null),
-				new AnswerDAO('C', 'answer description for C', 3, null),
-				new AnswerDAO('D', 'answer description for D', 4, null)
-			),
-			array(
-				new AnswerDAO('A', 'answer description for A', 20, null),
-				new AnswerDAO('B', 'answer description for B', 30, null),
-				new AnswerDAO('C', 'answer description for C', 20, null),
-				new AnswerDAO('D', 'answer description for D', 200, null)
-			)
-		);
-		
-		self::$mockQuestions = array(
-			new QuestionDAO(123, 'Test description0', '12/12/2013', '13/12/2013', '14/12/2013', array()),
-			new QuestionDAO(124, 'Test description1', '12/12/2014', '13/12/2014', '14/12/2014', array()),
-			new QuestionDAO(125, 'Test description2', '12/12/2015', '13/12/2015', '14/12/2015', array()),
-			new QuestionDAO(126, 'Test description3', '12/12/2016', '13/12/2016', '14/12/2016', array()),
-			new QuestionDAO(127, 'Test description4', '12/12/2017', '13/12/2017', '14/12/2017', array())
-		);
-		
-		for ($i = 0; $i < count(self::$mockQuestions); $i++) {
-			$question = self::$mockQuestions[$i];
-			foreach ($answers[$i] as $answer) {
-				// Bidirectional reference
-				$answer->question = $question;
-				$question->answers[] = $answer;
-			}
-		}
 	}
 	
 	public function getDefaultQuestion() {
@@ -68,7 +19,7 @@ class QuestionModel extends DBModel {
 			new AnswerDAO('C', 'answer description for C', null, null)
 		);
 		
-		$question = new QuestionDAO(null, 'Description for the question', null, '19/05/2014', '20/05/2014', array());
+		$question = new QuestionDAO(null, 'Description for the question', null, '19/05/2014', '20/05/2014', array(), null);
 		
 		foreach ($answers as $answer) {
 			$answer->question = $question;
@@ -126,7 +77,7 @@ class QuestionModel extends DBModel {
 			strtotime('2013-02-20 02:25:21') should be fine
 		
 		*/
-		return QuestionModel::$mockQuestions[$id];
+		return null;
 	}
 	
 	public function update($entity) {}
@@ -134,16 +85,61 @@ class QuestionModel extends DBModel {
 	public function delete($id) {}
 	
 	public function getAll() {
-		$res = $this->db_handler->select(self::$select_all_questions);
-		var_dump($this);
-		var_dump($res);
-		$objs = array();
-		$objs[] = $this->get(0);
-		$objs[] = $this->get(1);
-		$objs[] = $this->get(2);
-		$objs[] = $this->get(3);
-		$objs[] = $this->get(4);
-		return $objs;
+		try {
+			$questions = $this->db_handler->select(self::$select_all_questions);
+			//var_dump($this);
+			//var_dump($questions);
+			$objs = array();
+			
+			foreach($questions as $question) {
+				if (!isset($objs[ $question['id'] ])) {
+					// new question
+					$objs[ $question['id'] ] = array(
+						'id' => $question['id'],
+						'description' => $question['description'],
+						'created' => $question['created'],
+						'initial_date' => $question['initial_date'],
+						'ending_date' => $question['ending_date'],
+						'modified' => $question['modified'],
+						'answers' => array()
+					);
+				}
+				
+				// new answer
+				$objs[ $question['id'] ]['answers'][] = array(
+					'name' => $question['answer_name'],
+					'description' => $question['answer_description'],
+					'votes' => $question['answer_votes']
+				);
+			}
+			
+			//var_dump($objs);
+			
+			$ret = array();
+			foreach($objs as $question) {
+				$ret[] = $this->createQuestionFromAssoc($question);
+			}
+		} catch (Exception $ex) {
+		
+		}
+		return $ret;
+	}
+	
+	private function createQuestionFromAssoc($array) {
+		
+		$answers = array();
+		
+		foreach ($array['answers'] as $key => $value) {
+			$answers[] = new AnswerDAO($value['name'], $value['description'], $value['votes'], null);
+		}
+		
+		$question = new QuestionDAO($array['id'], $array['description'], $array['created'], $array['initial_date'], $array['ending_date'], $answers, $array['modified']);
+		
+		foreach ($answers as $answer) {
+			$answer->question = $question;
+		}
+		//var_dump($question);
+		return $question;
 	}
 }
 
