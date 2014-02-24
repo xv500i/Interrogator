@@ -60,7 +60,7 @@ class QuestionController extends Controller {
 		
 		// Save question for the view
 		$this->currentQuestion = $question;
-		var_dump($question);
+		//var_dump($question);
 		
 		$errors = $this->model->validate($question);
 		if (sizeof($errors) == 0) {
@@ -68,14 +68,14 @@ class QuestionController extends Controller {
 				$this->model->create($question);
 				$this->createSucceed = true;
 			} catch (Exception $e) {
-				
+				//var_dump($e);
 			}
 		} else {
 			$this->createSucceed = false;
 		}
 		//$valid = ($this->createSucceed ? 'true' : 'false');
 		//echo "The model is valid = $valid";
-		var_dump($errors);
+		//var_dump($errors);
 	}
 	
 	public function questionCreated() {
